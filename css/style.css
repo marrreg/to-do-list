@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    background-color: #e9eef9;
+    font-family: 'Lato', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#list {
+    width: 30%;
+    margin: auto;
+    background-color: white;
+    margin-top: 30px;
+    height: 90vh;
+    position: relative;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+#taskList {
+    padding-left: 0;
+    margin-top: 0;
+}
+
+#list .deleteButton {
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#list .list-item {
+    position: relative;
+    width: 100%;
+    list-style-type: none;
+    padding: 8px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+#list h1 {
+    margin-top: 0;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 0;
+}
+
+#addTaskSection {
+    position: absolute;
+    bottom: 2%;
+    left: 2%;
+    width: 96%;
+    text-align: center;
+}
+
+#newTaskText {
+    min-width: 86%;
+    margin-right: 5px;
+    height: 35px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding: 10px;
+}
+
+#newTaskButton {
+    height: 35px;
+    width: 10%;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    background-color: #c5ffcc;
+    cursor: pointer;
+}
+
+i.fa.fa-circle-thin {
+    margin-right: 5px;
+    font-size: 17px;
+}
+
+i.fa.fa-circle-thin.startButton {
+    display: none;
+}
+
+i.fa.fa-circle-thin.completeButton:hover~i.fa.fa-circle-thin.startButton {
+    display: inline;
+}

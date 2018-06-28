@@ -5,13 +5,21 @@
     <meta charset="UTF-8">
     <title>To Do List</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-    <input type="text" id="newTaskText">
-    <button id="newTaskButton">Add Task</button>
-    
-    <ul id="taskList"></ul>
+    <div id="list">
+        <h1>To do list</h1>
+        <ul id="taskList"></ul>
+        
+        <div id="addTaskSection">
+            <input type="text" id="newTaskText">
+            <button type="button" id="newTaskButton"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        </div>
+
+    </div>
 
     <script src="js/script.js"></script>
 </body>
