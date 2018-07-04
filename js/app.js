@@ -73,6 +73,7 @@ function renderTasks() {
         li.id = i;
 
         const completeIcon = document.createElement('i');
+        
         if (tasks[i].status === 'done') {
             completeIcon.className = ['fa fa-check-circle completeButton']
         } else if (tasks[i].status === 'open') {
