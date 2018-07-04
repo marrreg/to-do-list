@@ -17,6 +17,10 @@ class Task {
     markDone() {
         this.status = 'done';
     }
+
+    markOpen() {
+        this.status = 'open';   
+    }
 }
 
 let tasks = [];
@@ -40,12 +44,15 @@ function addNewTask(summary) {
 
 function deleteTask(index) {
     tasks.splice(index, 1);
-    console.log(tasks);
     renderTasks();
 }
 
-function completeTask(index) {
-    tasks[index].markDone();
+function handleStatusClick(index) {
+    if (tasks[index].status === 'open') {
+        tasks[index].markDone();
+    } else if (tasks[index].status === 'done') {
+        tasks[index].markOpen();
+    }
     renderTasks();
 }
 
@@ -60,8 +67,6 @@ function populateWithSampleTasks() {
 function renderTasks() {
     taskList.innerHTML = '';
 
-    console.log(taskList);
-
     for (let i = 0; i < tasks.length; i++) {
         const li = document.createElement('li');
         li.className = 'list-item';
@@ -70,7 +75,7 @@ function renderTasks() {
         const completeIcon = document.createElement('i');
         if (tasks[i].status === 'done') {
             completeIcon.className = ['fa fa-check-circle completeButton']
-        } else {
+        } else if (tasks[i].status === 'open') {
             completeIcon.className = ['fa fa-circle-thin completeButton'];
         }
 
@@ -91,7 +96,6 @@ function renderTasks() {
 }
 
 function addEventListeners() {
-    console.log(deleteButtons.length);
     for (let i = 0; i < deleteButtons.length; i++) {
         deleteButtons[i].addEventListener('click', function(event) {
             deleteTask(this.parentNode.id);
@@ -100,7 +104,7 @@ function addEventListeners() {
 
     for (let i = 0; i < completeButtons.length; i++) {
         completeButtons[i].addEventListener('click', function(event) {
-            completeTask(this.parentNode.id);
+            handleStatusClick(this.parentNode.id);
         });
     }
 }
