@@ -46,6 +46,7 @@ function deleteTask(index) {
 
 function completeTask(index) {
     tasks[index].markDone();
+    renderTasks();
 }
 
 function populateWithSampleTasks() {
@@ -67,7 +68,12 @@ function renderTasks() {
         li.id = i;
 
         const completeIcon = document.createElement('i');
-        completeIcon.className = ['fa fa-circle-thin completeButton'];
+        if (tasks[i].status === 'done') {
+            completeIcon.className = ['fa fa-check-circle completeButton']
+        } else {
+            completeIcon.className = ['fa fa-circle-thin completeButton'];
+        }
+
         li.appendChild(completeIcon);
 
         const taskSummary = document.createElement('span');
