@@ -7,6 +7,15 @@ let deleteButtons = document.getElementsByClassName('deleteButton');
 //
 //});
 
+class Task {
+    constructor(summary, status) {
+        this.summary = summary;
+        this.status = status;
+    }
+}
+
+let tasks = [];
+
 populateWithSampleTasks();
 
 newTaskButton.addEventListener('click', function () {
@@ -29,9 +38,11 @@ function addNewTask(taskText) {
 }
 
 function populateWithSampleTasks() {
-    addNewTask("Wyniesc smieci");
-    addNewTask("Zrobic zakupy");
-    addNewTask("Wyprowadzic psa");
-    addNewTask("Stowrzyc nowa aplikacje do zadan");
-    addNewTask("Ugotowac obiad");
+    tasks.push(new Task("Wyniesc smieci", "open"));
+    tasks.push(new Task("Zrobic zakupy", "open"));
+    tasks.push(new Task("Wyprowadzic psa", "open"));
+    tasks.push(new Task("Stworzyc nowa aplikacje do zadan", "open"));
+    tasks.push(new Task("Ugotowac obiad", "open"));
+
+    tasks.forEach(function(task) { addNewTask(task.summary); })
 }
