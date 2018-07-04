@@ -2,6 +2,7 @@ let newTaskButton = document.getElementById('newTaskButton');
 let newTaskText = document.getElementById('newTaskText');
 let taskList = document.getElementById("taskList");
 let deleteButtons = document.getElementsByClassName('deleteButton');
+let completeButtons = document.getElementsByClassName('completeButton');
 
 //document.addEventListener('DOMContentLoaded', function () {
 //
@@ -10,6 +11,11 @@ let deleteButtons = document.getElementsByClassName('deleteButton');
 class Task {
     constructor(summary, status) {
         this.summary = summary;
+        this.status = 'open';
+    }
+
+    markDone() {
+        this.status = 'done';
     }
 }
 
@@ -36,6 +42,10 @@ function deleteTask(index) {
     tasks.splice(index, 1);
     console.log(tasks);
     renderTasks();
+}
+
+function completeTask(index) {
+    tasks[index].markDone();
 }
 
 function populateWithSampleTasks() {
@@ -79,6 +89,12 @@ function addEventListeners() {
     for (let i = 0; i < deleteButtons.length; i++) {
         deleteButtons[i].addEventListener('click', function(event) {
             deleteTask(this.parentNode.id);
+        });
+    }
+
+    for (let i = 0; i < completeButtons.length; i++) {
+        completeButtons[i].addEventListener('click', function(event) {
+            completeTask(this.parentNode.id);
         });
     }
 }
