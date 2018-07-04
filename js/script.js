@@ -10,7 +10,11 @@ let deleteButtons = document.getElementsByClassName('deleteButton');
 class Task {
     constructor(summary, status) {
         this.summary = summary;
-        this.status = status;
+        this.status = "open";
+    }
+
+    markDone() {
+        this.status = "done"
     }
 }
 
@@ -38,11 +42,11 @@ function addNewTask(taskText) {
 }
 
 function populateWithSampleTasks() {
-    tasks.push(new Task("Wyniesc smieci", "open"));
-    tasks.push(new Task("Zrobic zakupy", "open"));
-    tasks.push(new Task("Wyprowadzic psa", "open"));
-    tasks.push(new Task("Stworzyc nowa aplikacje do zadan", "open"));
-    tasks.push(new Task("Ugotowac obiad", "open"));
+    tasks.push(new Task("Wyniesc smieci"));
+    tasks.push(new Task("Zrobic zakupy"));
+    tasks.push(new Task("Wyprowadzic psa"));
+    tasks.push(new Task("Stworzyc nowa aplikacje do zadan"));
+    tasks.push(new Task("Ugotowac obiad"));
 
     tasks.forEach(function(task) { addNewTask(task.summary); })
 }
