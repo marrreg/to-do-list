@@ -3,10 +3,7 @@ let newTaskText = document.getElementById('newTaskText');
 let taskList = document.getElementById("taskList");
 let deleteButtons = document.getElementsByClassName('deleteButton');
 let completeButtons = document.getElementsByClassName('completeButton');
-
-//document.addEventListener('DOMContentLoaded', function () {
-//
-//});
+let tasks = [];
 
 // Task class represents a single Task.
 class Task {
@@ -26,18 +23,6 @@ class Task {
         this.status = 'open';   
     }
 }
-
-// tasks is the main "storage" for Task objects in the application
-let tasks = [];
-
-populateWithSampleTasks();
-renderTasks();
-
-newTaskButton.addEventListener('click', function () {
-    // When a new task is added, it should be appended to the tasks array and the text field shall be cleared
-    addNewTask(newTaskText.value);
-    newTaskText.value = '';
-});
 
 function addNewTask(summary) {
     // If there is something in the text field, a new Task object with provided summary shall be added to the tasks array
@@ -129,3 +114,17 @@ function addEventListeners() {
         });
     }
 }
+
+//document.addEventListener('DOMContentLoaded', function () {
+//
+//});
+
+newTaskButton.addEventListener('click', function () {
+    // When a new task is added, it should be appended to the tasks array and the text field shall be cleared
+    addNewTask(newTaskText.value);
+    newTaskText.value = '';
+});
+
+// tasks is the main "storage" for Task objects in the application
+populateWithSampleTasks();
+renderTasks();
