@@ -80,9 +80,11 @@ function renderTasks() {
         
         // depending on whether the task is done or open, add a class with relevant font-awesome icon
         if (tasks[i].status === 'done') {
-            completeIcon.className = ['fa fa-check-circle completeButton']
+            completeIcon.className = ['fa fa-check-circle completeButton'];
         } else if (tasks[i].status === 'open') {
             completeIcon.className = ['fa fa-circle-thin completeButton'];
+        } else if (tasks[i].status === 'ongoing') {
+            completeIcon.className = ['fa fa-play-circle-o ongoingButton']
         }
 
         li.appendChild(completeIcon); // Add the icon to the <li> element defined earlier
