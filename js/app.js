@@ -24,7 +24,7 @@ class Task {
     }
 
     markOngoing() {
-        this.status = 'ongoing'
+        this.status = 'ongoing';
     }
 }
 
