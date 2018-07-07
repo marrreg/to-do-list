@@ -82,12 +82,7 @@ body {
     cursor: pointer;
 }
 
-i.fa.fa-circle-thin {
-    margin-right: 5px;
-    font-size: 17px;
-}
-
-i.fa.fa-check-circle {
+i.fa.fa-circle-thin, i.fa.fa-check-circle {
     margin-right: 5px;
     font-size: 17px;
 }

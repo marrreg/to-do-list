@@ -3,7 +3,7 @@ let newTaskText = document.getElementById('newTaskText');
 let taskList = document.getElementById("taskList");
 let deleteButtons = document.getElementsByClassName('deleteButton');
 let completeButtons = document.getElementsByClassName('completeButton');
-let tasks = [];
+let tasks = []; // tasks is the main "storage" for Task objects in the application
 
 // Task class represents a single Task.
 class Task {
@@ -95,13 +95,13 @@ function renderTasks() {
 
         // Add the newly created <li> element representing the complete task and all needed buttons to the task list
         taskList.appendChild(li);
-        console.log(li);
     }
 
-    addEventListeners();
+    addListEventListeners();
 }
 
-function addEventListeners() {
+function addListEventListeners() {
+    // Add event listeners to the list items. Executed for each tasks re-render.
     for (let i = 0; i < deleteButtons.length; i++) {
         deleteButtons[i].addEventListener('click', function(event) {
             deleteTask(this.parentNode.id);
@@ -115,16 +115,18 @@ function addEventListeners() {
     }
 }
 
-//document.addEventListener('DOMContentLoaded', function () {
-//
-//});
+function addGeneralEventListeners() {
+    // Add event listeners visible at all times, such as new task button
+    newTaskButton.addEventListener('click', function () {
+        // When a new task is added, it should be appended to the tasks array and the text field shall be cleared
+        addNewTask(newTaskText.value);
+        newTaskText.value = '';
+    });
+}
 
-newTaskButton.addEventListener('click', function () {
-    // When a new task is added, it should be appended to the tasks array and the text field shall be cleared
-    addNewTask(newTaskText.value);
-    newTaskText.value = '';
+document.addEventListener('DOMContentLoaded', function () {
+    // Start operating on page contents only once the document is available
+    addGeneralEventListeners();
+    populateWithSampleTasks();
+    renderTasks();
 });
-
-// tasks is the main "storage" for Task objects in the application
-populateWithSampleTasks();
-renderTasks();
