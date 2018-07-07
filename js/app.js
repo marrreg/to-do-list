@@ -22,6 +22,10 @@ class Task {
         // Change task's status (back) to open        
         this.status = 'open';   
     }
+
+    markOngoing() {
+        this.status = 'ongoing'
+    }
 }
 
 function addNewTask(summary) {
