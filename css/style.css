@@ -88,7 +88,7 @@ i.fa.fa-circle-thin, i.fa.fa-check-circle, i.fa.fa-play-circle-o {
     font-size: 19px;
 }
 
-.completeButton {
+.statusButton {
     cursor: pointer;
 }
 

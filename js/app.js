@@ -2,7 +2,7 @@ let newTaskButton = document.getElementById('newTaskButton');
 let newTaskText = document.getElementById('newTaskText');
 let taskList = document.getElementById("taskList");
 let deleteButtons = document.getElementsByClassName('deleteButton');
-let completeButtons = document.getElementsByClassName('completeButton');
+let statusButtons = document.getElementsByClassName('statusButton');
 let tasks = []; // tasks is the main "storage" for Task objects in the application
 
 // Task class represents a single Task.
@@ -50,9 +50,9 @@ function handleStatusClick(index) {
 
     // The action depends on the status of relevant task at the exact moment of status circle clicking
     if (tasks[index].status === 'open') {
+        tasks[index].markOngoing();
+    } else if (tasks[index].status === 'ongoing') {
         tasks[index].markDone();
-    } else if (tasks[index].status === 'done') {
-        tasks[index].markOpen();
     }
     renderTasks();
 }
@@ -80,11 +80,11 @@ function renderTasks() {
         
         // depending on whether the task is done or open, add a class with relevant font-awesome icon
         if (tasks[i].status === 'done') {
-            completeIcon.className = ['fa fa-check-circle completeButton'];
+            completeIcon.className = ['fa fa-check-circle statusButton'];
         } else if (tasks[i].status === 'open') {
-            completeIcon.className = ['fa fa-circle-thin completeButton'];
+            completeIcon.className = ['fa fa-circle-thin statusButton'];
         } else if (tasks[i].status === 'ongoing') {
-            completeIcon.className = ['fa fa-play-circle-o ongoingButton']
+            completeIcon.className = ['fa fa-play-circle-o statusButton']
         }
 
         li.appendChild(completeIcon); // Add the icon to the <li> element defined earlier
@@ -114,8 +114,8 @@ function addListEventListeners() {
         });
     }
 
-    for (let i = 0; i < completeButtons.length; i++) {
-        completeButtons[i].addEventListener('click', function(event) {
+    for (let i = 0; i < statusButtons.length; i++) {
+        statusButtons[i].addEventListener('click', function(event) {
             handleStatusClick(this.parentNode.id);
         });
     }
