@@ -32,6 +32,7 @@ body {
     right: 0;
     margin-right: 10px;
     cursor: pointer;
+    font-size: 15px;
 }
 
 #list .list-item {
@@ -82,17 +83,12 @@ body {
     cursor: pointer;
 }
 
-i.fa.fa-circle-thin {
+i.fa.fa-circle-thin, i.fa.fa-check-circle, i.fa.fa-play-circle-o {
     margin-right: 5px;
-    font-size: 17px;
+    font-size: 19px;
 }
 
-i.fa.fa-check-circle {
-    margin-right: 5px;
-    font-size: 17px;
-}
-
-.completeButton {
+.statusButton {
     cursor: pointer;
 }
 
