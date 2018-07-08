@@ -87,10 +87,6 @@ i.fa.fa-circle-thin {
     font-size: 17px;
 }
 
-i.fa.fa-circle-thin.startButton {
-    display: none;
-}
-
-i.fa.fa-circle-thin.completeButton:hover~i.fa.fa-circle-thin.startButton {
-    display: inline;
+.completeButton {
+    cursor: pointer;
 }
