@@ -92,3 +92,7 @@ i.fa.fa-circle-thin, i.fa.fa-check-circle, i.fa.fa-play-circle-o {
     cursor: pointer;
 }
 
+.strikeElement {
+    text-decoration: line-through;
+}
+

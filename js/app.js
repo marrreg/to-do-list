@@ -11,11 +11,16 @@ class Task {
         // Summary is the brief description of the task, status represents whether it's open or done
         this.summary = summary;
         this.status = 'open';
+        this.startTimestamp = '';
+        this.stopTimestamp = '';
+        this.duration = 0;
     }
 
     markDone() {
         // Change task's status to done
         this.status = 'done';
+        this.stopTimestamp = new Date;
+        this.duration = Math.round((this.stopTimestamp - this.startTimestamp)/1000);
     }
 
     markOpen() {
@@ -25,6 +30,7 @@ class Task {
 
     markOngoing() {
         this.status = 'ongoing';
+        this.startTimestamp = new Date;
     }
 }
 
@@ -51,8 +57,10 @@ function handleStatusClick(index) {
     // The action depends on the status of relevant task at the exact moment of status circle clicking
     if (tasks[index].status === 'open') {
         tasks[index].markOngoing();
+        console.log(tasks[index]);
     } else if (tasks[index].status === 'ongoing') {
         tasks[index].markDone();
+        console.log(tasks[index]);
     }
     renderTasks();
 }
@@ -80,11 +88,11 @@ function renderTasks() {
         
         // depending on whether the task is done or open, add a class with relevant font-awesome icon
         if (tasks[i].status === 'done') {
-            completeIcon.className = ['fa fa-check-circle statusButton'];
+            completeIcon.className = 'fa fa-check-circle statusButton';
         } else if (tasks[i].status === 'open') {
-            completeIcon.className = ['fa fa-circle-thin statusButton'];
+            completeIcon.className = 'fa fa-circle-thin statusButton';
         } else if (tasks[i].status === 'ongoing') {
-            completeIcon.className = ['fa fa-play-circle-o statusButton']
+            completeIcon.className = 'fa fa-play-circle-o statusButton'
         }
 
         li.appendChild(completeIcon); // Add the icon to the <li> element defined earlier
@@ -92,8 +100,17 @@ function renderTasks() {
         // Create a new <span> element and add the task summary inside (i.e. "Wyniesc smieci")
         const taskSummary = document.createElement('span');
         taskSummary.textContent = tasks[i].summary;
-        li.appendChild(taskSummary); // Add the freshly created <span> element to the <li>
-
+        if (tasks[i].status === 'done') {
+            taskSummary.className = 'strikeElement';
+            li.appendChild(taskSummary);
+            const taskDuration = document.createElement('span');
+            taskDuration.textContent = ' ' + tasks[i].duration + 's';
+            li.appendChild(taskDuration);
+        } else {
+            li.appendChild(taskSummary);   
+        }
+        // Add the freshly created <span> element to the <li>
+        
         // Add the delete icon (trashcan)
         const deleteIcon = document.createElement('i');
         deleteIcon.className = ['fa fa-trash deleteButton'];
