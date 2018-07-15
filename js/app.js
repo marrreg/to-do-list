@@ -165,6 +165,12 @@ function addGeneralEventListeners() {
         addNewTask(newTaskText.value);
         newTaskText.value = '';
     });
+    newTaskText.addEventListener('keydown', function(e){
+        if(e.keyCode === 13) {
+            addNewTask(newTaskText.value);
+            newTaskText.value = '';
+        }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
