@@ -41,13 +41,23 @@ class Task {
     }
 }
 
-function addNewTask(summary) {
+function addNewTask(newTaskString) {
     // If there is something in the text field, a new Task object with provided summary shall be added to the tasks array
-    if (summary) {
-        let openingBracketIndex = summary.indexOf("[");
-        let closingBracketIndex = summary.indexOf("]");
-        console.log(summary.substring(openingBracketIndex + 1, closingBracketIndex));
-        tasks.push(new Task(summary));
+    if (newTaskString) {
+        let openingBracketIndex = newTaskString.indexOf("[");
+        let closingBracketIndex = newTaskString.indexOf("]");
+        let newTaskEstimate = 0;
+        let newTaskSummary = newTaskString;
+
+        if (openingBracketIndex != -1 && closingBracketIndex != -1) {
+            newTaskEstimate = parseInt(newTaskString.substring(openingBracketIndex + 1, closingBracketIndex));
+            newTaskSummary = newTaskString.substring(0, openingBracketIndex).trim() + newTaskString.substring(closingBracketIndex + 1);
+        }
+
+        tasks.push(new Task(newTaskSummary, newTaskEstimate));
+
+        console.log(tasks[tasks.length-1]);
+
         // Once the task is added, the task list is re-rendered (that is: the view is cleared and filled with all tasks in the array)
         renderTasks();  // NOTE: ANY CHANGE IN THE TASKS LIST SHOULD BE FOLLOWED BY RE-RENDERING THE VIEW
     } else {
