@@ -14,6 +14,7 @@ class Task {
         this.startTimestamp = '';
         this.stopTimestamp = '';
         this.duration = 0;
+        this.estimate = 0;
     }
 
     markDone() {
