@@ -33,6 +33,10 @@ class Task {
         this.status = 'ongoing';
         this.startTimestamp = new Date;
     }
+
+    setEstimate(estimateInSeconds) {
+        this.estimate = estimateInSeconds;
+    }
 }
 
 function addNewTask(summary) {
