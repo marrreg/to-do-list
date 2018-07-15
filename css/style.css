@@ -1,7 +1,7 @@
 body {
     margin: 0;
-    background-color: #e9eef9;
-    font-family: 'Lato', sans-serif;
+    background-color: #22264b;
+    font-family: 'Montserrat', sans-serif;
 }
 
 * {
@@ -15,13 +15,14 @@ body {
     margin-top: 30px;
     height: 90vh;
     position: relative;
-    border-radius: 10px;
-    border: 1px solid rgba(0,0,0,0.02);
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.7);
 }
 
 #taskList {
-    padding-left: 0;
     margin-top: 0;
+    padding: 10px 25px;
 }
 
 #list .deleteButton {
@@ -46,13 +47,17 @@ body {
 
 #list h1 {
     margin-top: 0;
+    background: #b56969;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 3px;
     border-bottom: 1px solid rgba(0,0,0,0.1);
-    padding-top: 10px;
-    padding-bottom: 10px;
+    font-size: 12px;
+    padding-top: 7px;
+    font-weight: 600;
     margin-bottom: 0;
+    color: #22264b;
+    height: 30px;
 }
 
 #addTaskSection {
@@ -79,7 +84,7 @@ body {
     border-radius: 5px;
     outline: none;
     border: none;
-    background-color: #c5ffcc;
+    background-color: #e6cf8b;
     cursor: pointer;
 }
 
