@@ -7,7 +7,7 @@ let tasks = []; // tasks is the main "storage" for Task objects in the applicati
 
 // Task class represents a single Task.
 class Task {
-    constructor(summary, status) {
+    constructor(summary) {
         // Summary is the brief description of the task, status represents whether it's open or done
         this.summary = summary;
         this.status = 'open';
