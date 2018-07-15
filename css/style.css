@@ -33,7 +33,8 @@ body {
     right: 0;
     margin-right: 10px;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 0px;
+/*    display: none;*/
 }
 
 #list .list-item {
@@ -41,8 +42,14 @@ body {
     width: 100%;
     list-style-type: none;
     padding: 8px;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.list-item:hover .deleteButton::before {
+/*    display: inline-block;*/
+    font-size: 15px;
+
 }
 
 #list h1 {
@@ -84,7 +91,7 @@ body {
     border-radius: 5px;
     outline: none;
     border: none;
-    background-color: #e6cf8b;
+    background-color: #2E7D32;
     cursor: pointer;
 }
 
