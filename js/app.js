@@ -7,14 +7,14 @@ let tasks = []; // tasks is the main "storage" for Task objects in the applicati
 
 // Task class represents a single Task.
 class Task {
-    constructor(summary) {
+    constructor(summary, estimate) {
         // Summary is the brief description of the task, status represents whether it's open or done
         this.summary = summary;
         this.status = 'open';
         this.startTimestamp = '';
         this.stopTimestamp = '';
         this.duration = 0;
-        this.estimate = 0;
+        this.estimate = estimate;
     }
 
     markDone() {
@@ -42,6 +42,9 @@ class Task {
 function addNewTask(summary) {
     // If there is something in the text field, a new Task object with provided summary shall be added to the tasks array
     if (summary) {
+        openingBracketIndex = summary.indexOf("[");
+        closingBracketIndex = summary.indexOf("]");
+        console.log(summary.substring(openingBracketIndex + 1, closingBracketIndex));
         tasks.push(new Task(summary));
         // Once the task is added, the task list is re-rendered (that is: the view is cleared and filled with all tasks in the array)
         renderTasks();  // NOTE: ANY CHANGE IN THE TASKS LIST SHOULD BE FOLLOWED BY RE-RENDERING THE VIEW
