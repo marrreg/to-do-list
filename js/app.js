@@ -1,3 +1,5 @@
+'use strict';
+
 let newTaskButton = document.getElementById('newTaskButton');
 let newTaskText = document.getElementById('newTaskText');
 let taskList = document.getElementById("taskList");
@@ -42,8 +44,8 @@ class Task {
 function addNewTask(summary) {
     // If there is something in the text field, a new Task object with provided summary shall be added to the tasks array
     if (summary) {
-        openingBracketIndex = summary.indexOf("[");
-        closingBracketIndex = summary.indexOf("]");
+        let openingBracketIndex = summary.indexOf("[");
+        let closingBracketIndex = summary.indexOf("]");
         console.log(summary.substring(openingBracketIndex + 1, closingBracketIndex));
         tasks.push(new Task(summary));
         // Once the task is added, the task list is re-rendered (that is: the view is cleared and filled with all tasks in the array)
