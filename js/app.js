@@ -77,6 +77,7 @@ function handleStatusClick(index) {
     // The action depends on the status of relevant task at the exact moment of status circle clicking
     if (tasks[index].status === 'open') {
         tasks[index].markOngoing();
+        tasks.unshift(tasks.splice(index, 1)[0]);
         console.log(tasks[index]);
     } else if (tasks[index].status === 'ongoing') {
         tasks[index].markDone();
