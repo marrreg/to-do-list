@@ -6,6 +6,7 @@ let taskList = document.getElementById("taskList");
 let deleteButtons = document.getElementsByClassName('deleteButton');
 let statusButtons = document.getElementsByClassName('statusButton');
 let tasks = []; // tasks is the main "storage" for Task objects in the application
+let tasksDone = [];
 
 // Task class represents a single Task.
 class Task {
@@ -81,8 +82,9 @@ function handleStatusClick(index) {
         console.log(tasks[index]);
     } else if (tasks[index].status === 'ongoing') {
         tasks[index].markDone();
-        tasks.push(tasks.splice(index, 1)[0]);
-        console.log(tasks[index]);
+        tasksDone.push(tasks[index]);
+        console.log(tasksDone);
+        tasks.splice(index, 1);
     }
     renderTasks();
 }
