@@ -81,6 +81,7 @@ function handleStatusClick(index) {
         console.log(tasks[index]);
     } else if (tasks[index].status === 'ongoing') {
         tasks[index].markDone();
+        tasks.push(tasks.splice(index, 1)[0]);
         console.log(tasks[index]);
     }
     renderTasks();
