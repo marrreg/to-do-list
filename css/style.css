@@ -8,16 +8,76 @@ body {
     box-sizing: border-box;
 }
 
+header {
+    background-color: #b56969;
+    width: 100%;
+    height: 50px;
+    position: relative;
+}
+
+#logo-up {
+    position: absolute;
+    bottom: -65%;
+    left: 2%;
+    text-transform: uppercase;
+}
+
+#logo-up p {
+    font-size: 26px;
+    color: #22264b;
+    font-weight: 700;
+}
+
+#logo-down {
+    left: 5%;
+    position: absolute;
+    bottom: -102%;
+    text-transform: uppercase;
+}
+
+#logo-down p {
+    font-size: 26px;
+    color: #b56969;
+    font-weight: 700;
+}
+
+#status {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+}
+
+#status p {
+    display: inline-block;
+    color: #22264b;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+#status .light-text {
+    opacity: 0.55;
+}
+
+#login {
+    position: absolute;
+    right: 0%;
+}
+
+#login p {
+    display: inline-block;
+    color: #22264b;
+    text-transform: uppercase;
+    margin-right: 20px;
+}
+
 #list {
     width: 30%;
     margin: auto;
     background-color: white;
-    margin-top: 30px;
     height: 90vh;
     position: relative;
-    -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.7);
-    -moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.7);
-    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.7);
 }
 
 #taskList {
@@ -50,21 +110,6 @@ body {
 /*    display: inline-block;*/
     font-size: 15px;
 
-}
-
-#list h1 {
-    margin-top: 0;
-    background: #b56969;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    font-size: 12px;
-    padding-top: 7px;
-    font-weight: 600;
-    margin-bottom: 0;
-    color: #22264b;
-    height: 30px;
 }
 
 #addTaskSection {
@@ -108,3 +153,42 @@ i.fa.fa-circle-thin, i.fa.fa-check-circle, i.fa.fa-play-circle-o {
     text-decoration: line-through;
 }
 
+footer {
+    background-color: #15172e;
+    width: 100%;
+    height: 50px;
+    position: relative;
+}
+
+footer p {
+    color: #626896;
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0%;
+}
+
+#icons-container {
+    position: absolute;
+    top: 20%;
+    left: 1%;
+}
+
+.icons {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+#facebook {
+    background-image: url(../images/Facebook.png);
+}
+
+#twitter {
+    background-image: url(../images/Twitter.png);
+}
+
+#linkedin {
+    background-image: url(../images/Linkedin.png);
+}
