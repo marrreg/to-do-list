@@ -60,6 +60,9 @@ function addNewTask(newTaskString) {
 
         console.log(tasks[tasks.length-1]);
 
+        // Once a new task is added, it seems reasonable to switch to open tasks view if not selected. Status setting is not yet extracted to a dedicated function, so simulating a click for now.
+        statusSelection.children[0].click();
+
         // Once the task is added, the task list is re-rendered (that is: the view is cleared and filled with all tasks in the array)
         renderTasks();  // NOTE: ANY CHANGE IN THE TASKS LIST SHOULD BE FOLLOWED BY RE-RENDERING THE VIEW
     } else {
@@ -91,7 +94,6 @@ function handleStatusSelectionClick(index, id) {
     for (let i = 0; i < statusSelection.children.length; i++) {
         statusSelection.children[i].className = '';
     }
-
     statusSelection.children[index].className = 'active';
     activeStatusSelection = statusSelection.children[index].textContent;
 
@@ -112,6 +114,15 @@ function renderTasks() {
     taskList.innerHTML = '';
 
     for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].status === 'done') {
+            if (activeStatusSelection === 'open') {
+                continue;
+            }
+        } else {
+            if (activeStatusSelection === 'done') {
+                continue;
+            }
+        }
         
         // Create a new <li> element, that we will fill with task information.
         const li = document.createElement('li');
