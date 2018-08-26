@@ -96,8 +96,15 @@ function handleStatusClick(index) {
     renderTasks();
 }
 
-function handleStatusSelectionClick(id) {
-    console.log("Clicked a status selection button");
+function handleStatusSelectionClick(index, id) {
+    if (index == 0) {
+        statusSelectionOptions.unshift(statusSelectionOptions.splice(2, 1)[0]);
+    } else if (index == 2) {
+        statusSelectionOptions.push(statusSelectionOptions[0]);
+        statusSelectionOptions.splice(0, 1);
+    }
+
+    renderStatusSelection();
 }
 
 function populateWithSampleTasks() {
@@ -163,10 +170,14 @@ function renderStatusSelection() {
     for (let i = 0; i < statusSelectionOptions.length; i++) {
         const p = document.createElement('p');
         p.textContent = statusSelectionOptions[i].text;
+        p.id = statusSelectionOptions[i].id;
+
         if (i != 1) {
             // If the middle element is being generated, it should remain highlighted
             p.className = 'light-text';
         }
+
+        statusSelection.appendChild(p);
     }
 
     addStatusSelectionEventListeners();
@@ -208,7 +219,7 @@ function addGeneralEventListeners() {
 function addStatusSelectionEventListeners() {
     for (let i = 0; i < statusSelection.children.length; i++) {
         statusSelection.children[i].addEventListener('click', function(event) {
-            handleStatusSelectionClick(this.id);
+            handleStatusSelectionClick(i, this.id);
         });
     }
 }
