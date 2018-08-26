@@ -2,12 +2,18 @@
 
 let newTaskButton = document.getElementById('newTaskButton');
 let newTaskText = document.getElementById('newTaskText');
-let taskList = document.getElementById("taskList");
+let taskList = document.getElementById('taskList');
 let deleteButtons = document.getElementsByClassName('deleteButton');
 let statusButtons = document.getElementsByClassName('statusButton');
-let statusSelection = document.getElementsByClassName('status-selection')
+let statusSelection = document.getElementById('status-selection');
 let tasks = []; // tasks is the main "storage" for Task objects in the application
 let tasksDone = [];
+let statusSelectionOptions = [
+    {text: "ongoing", id: "selectOngoing"},
+    {text: "open", id: "selectOpen"},
+    {text: "done", id: "selectDone"}
+];
+let activeStatusSelection = "open";
 
 // Task class represents a single Task.
 class Task {
@@ -90,6 +96,10 @@ function handleStatusClick(index) {
     renderTasks();
 }
 
+function handleStatusSelectionClick(id) {
+    console.log("Clicked a status selection button");
+}
+
 function populateWithSampleTasks() {
     // Add some sample tasks to the tasks array, for testing purposes
     tasks.push(new Task("Wyniesc smieci"));
@@ -148,6 +158,20 @@ function renderTasks() {
     addListEventListeners();
 }
 
+function renderStatusSelection() {
+    statusSelection.innerHTML = '';
+    for (let i = 0; i < statusSelectionOptions.length; i++) {
+        const p = document.createElement('p');
+        p.textContent = statusSelectionOptions[i].text;
+        if (i != 1) {
+            // If the middle element is being generated, it should remain highlighted
+            p.className = 'light-text';
+        }
+    }
+
+    addStatusSelectionEventListeners();
+}
+
 function addListEventListeners() {
     // Add event listeners to the list items. Executed for each tasks re-render.
     for (let i = 0; i < deleteButtons.length; i++) {
@@ -170,7 +194,7 @@ function addGeneralEventListeners() {
         addNewTask(newTaskText.value);
         newTaskText.value = '';
     });
-    
+
     newTaskText.addEventListener('keydown', function(e){
         if(e.keyCode === 13) {
             addNewTask(newTaskText.value);
@@ -178,11 +202,21 @@ function addGeneralEventListeners() {
         }
     });
 
+    addStatusSelectionEventListeners();
+}
+
+function addStatusSelectionEventListeners() {
+    for (let i = 0; i < statusSelection.children.length; i++) {
+        statusSelection.children[i].addEventListener('click', function(event) {
+            handleStatusSelectionClick(this.id);
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     // Start operating on page contents only once the document is available
     addGeneralEventListeners();
     populateWithSampleTasks();
+    renderStatusSelection();
     renderTasks();
 });
