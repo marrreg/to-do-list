@@ -102,11 +102,15 @@ function handleStatusSelectionClick(index, id) {
 
 function populateWithSampleTasks() {
     // Add some sample tasks to the tasks array, for testing purposes
-    tasks.push(new Task("Wyniesc smieci"));
-    tasks.push(new Task("Zrobic zakupy"));
-    tasks.push(new Task("Wyprowadzic psa"));
-    tasks.push(new Task("Stworzyc nowa aplikacje do zadan"));
-    tasks.push(new Task("Ugotowac obiad"));
+    tasks.push(new Task("Zrobic change request projektow ABC"));
+    tasks.push(new Task("Zrobic rzeczy z maila od abc.pl"));
+    tasks.push(new Task("Zorganizowac do firmy ABC (3 sztuki) + kabelki, ktore sa podobno trudnodostepne"));
+    tasks.push(new Task("Sprawdzic, czy da sie zestawic AB1-2 z AB dla ABC"));
+    tasks.push(new Task("Porozmawiac z Johnem na temat jego dostepnosci na ABC i odpisac Bridget"));
+    tasks.push(new Task("Zalogowac czas pracy"));
+    tasks.push(new Task("Zamowic obiad na jutro"));
+    tasks.push(new Task("zrobic wewnetrznego taska do ABC-155"));
+    tasks.push(new Task("zorganizowac rozwiazanie ABC-54"));
 }
 
 function renderTasks() {
