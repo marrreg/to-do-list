@@ -70,7 +70,14 @@ function addNewTask(newTaskString) {
 
 function deleteTask(index) {
     // Remove the task with provided index. Once it's done, all indexes are moved respectively
-    tasks.splice(index, 1);
+    let tasksList;
+    if (activeStatusSelection === 'done') {
+        tasksList = tasksDone;
+    } else {
+        tasksList = tasks;
+    }
+    
+    tasksList.splice(index, 1);
     renderTasks();
 }
 
@@ -115,7 +122,14 @@ function renderTasks() {
     // Clear the tasks view (taskList is the main <ul> of the application)
     taskList.innerHTML = '';
 
-    for (let i = 0; i < tasks.length; i++) {
+    let tasksToRender;
+    if (activeStatusSelection === 'done') {
+        tasksToRender = tasksDone;
+    } else {
+        tasksToRender = tasks;
+    }
+
+    for (let i = 0; i < tasksToRender.length; i++) {
         // Create a new <li> element, that we will fill with task information.
         const li = document.createElement('li');
         li.className = 'list-item'; // add standard task class
@@ -124,11 +138,11 @@ function renderTasks() {
         const completeIcon = document.createElement('i'); // Create an empty icon element
         
         // depending on whether the task is done or open, add a class with relevant font-awesome icon
-        if (tasks[i].status === 'done') {
+        if (tasksToRender[i].status === 'done') {
             completeIcon.className = 'fa fa-check-circle statusButton';
-        } else if (tasks[i].status === 'open') {
+        } else if (tasksToRender[i].status === 'open') {
             completeIcon.className = 'fa fa-circle-thin statusButton';
-        } else if (tasks[i].status === 'ongoing') {
+        } else if (tasksToRender[i].status === 'ongoing') {
             completeIcon.className = 'fa fa-play-circle-o statusButton'
         }
 
@@ -136,12 +150,11 @@ function renderTasks() {
 
         // Create a new <span> element and add the task summary inside (i.e. "Wyniesc smieci")
         const taskSummary = document.createElement('span');
-        taskSummary.textContent = tasks[i].summary;
-        if (tasks[i].status === 'done') {
-            taskSummary.className = 'strikeElement';
+        taskSummary.textContent = tasksToRender[i].summary;
+        if (tasksToRender[i].status === 'done') {
             li.appendChild(taskSummary);
             const taskDuration = document.createElement('span');
-            taskDuration.textContent = ' ' + tasks[i].duration + 's';
+            taskDuration.textContent = ' ' + tasksToRender[i].duration + 's';
             li.appendChild(taskDuration);
         } else {
             li.appendChild(taskSummary);   
