@@ -55,10 +55,11 @@ header {
     font-weight: 700;
     margin-right: 15px;
     margin-left: 15px;
+    opacity: 0.55;
 }
 
-#status-selection .light-text {
-    opacity: 0.55;
+#status-selection .active {
+    opacity: 1;
 }
 
 #login {

@@ -8,12 +8,7 @@ let statusButtons = document.getElementsByClassName('statusButton');
 let statusSelection = document.getElementById('status-selection');
 let tasks = []; // tasks is the main "storage" for Task objects in the application
 let tasksDone = [];
-let statusSelectionOptions = [
-    {text: "ongoing", id: "selectOngoing"},
-    {text: "open", id: "selectOpen"},
-    {text: "done", id: "selectDone"}
-];
-let activeStatusSelection = "open";
+let activeStatusSelection = 'open';
 
 // Task class represents a single Task.
 class Task {
@@ -97,14 +92,14 @@ function handleStatusClick(index) {
 }
 
 function handleStatusSelectionClick(index, id) {
-    if (index == 0) {
-        statusSelectionOptions.unshift(statusSelectionOptions.splice(2, 1)[0]);
-    } else if (index == 2) {
-        statusSelectionOptions.push(statusSelectionOptions[0]);
-        statusSelectionOptions.splice(0, 1);
+    for (let i = 0; i < statusSelection.children.length; i++) {
+        statusSelection.children[i].className = '';
     }
 
-    renderStatusSelection();
+    statusSelection.children[index].className = 'active';
+    activeStatusSelection = statusSelection.children[index].textContent;
+
+    renderTasks();
 }
 
 function populateWithSampleTasks() {
@@ -228,6 +223,5 @@ document.addEventListener('DOMContentLoaded', function () {
     // Start operating on page contents only once the document is available
     addGeneralEventListeners();
     populateWithSampleTasks();
-    renderStatusSelection();
     renderTasks();
 });
