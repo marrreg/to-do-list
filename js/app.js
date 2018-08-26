@@ -5,6 +5,7 @@ let newTaskText = document.getElementById('newTaskText');
 let taskList = document.getElementById("taskList");
 let deleteButtons = document.getElementsByClassName('deleteButton');
 let statusButtons = document.getElementsByClassName('statusButton');
+let statusSelection = document.getElementsByClassName('status-selection')
 let tasks = []; // tasks is the main "storage" for Task objects in the application
 let tasksDone = [];
 
@@ -169,12 +170,14 @@ function addGeneralEventListeners() {
         addNewTask(newTaskText.value);
         newTaskText.value = '';
     });
+    
     newTaskText.addEventListener('keydown', function(e){
         if(e.keyCode === 13) {
             addNewTask(newTaskText.value);
             newTaskText.value = '';
         }
     });
+
 }
 
 document.addEventListener('DOMContentLoaded', function () {
