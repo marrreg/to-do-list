@@ -7,7 +7,6 @@ let deleteButtons = document.getElementsByClassName('deleteButton');
 let statusButtons = document.getElementsByClassName('statusButton');
 let statusSelection = document.getElementById('status-selection');
 let tasks = []; // tasks is the main "storage" for Task objects in the application
-let tasksDone = [];
 let activeStatusSelection = 'open';
 
 // Task class represents a single Task.
@@ -70,14 +69,7 @@ function addNewTask(newTaskString) {
 
 function deleteTask(index) {
     // Remove the task with provided index. Once it's done, all indexes are moved respectively
-    let tasksList;
-    if (activeStatusSelection === 'done') {
-        tasksList = tasksDone;
-    } else {
-        tasksList = tasks;
-    }
-    
-    tasksList.splice(index, 1);
+    tasks.splice(index, 1);
     renderTasks();
 }
 
@@ -91,9 +83,6 @@ function handleStatusClick(index) {
         console.log(tasks[index]);
     } else if (tasks[index].status === 'ongoing') {
         tasks[index].markDone();
-        tasksDone.push(tasks[index]);
-        console.log(tasksDone);
-        tasks.splice(index, 1);
     }
     renderTasks();
 }
@@ -122,14 +111,8 @@ function renderTasks() {
     // Clear the tasks view (taskList is the main <ul> of the application)
     taskList.innerHTML = '';
 
-    let tasksToRender;
-    if (activeStatusSelection === 'done') {
-        tasksToRender = tasksDone;
-    } else {
-        tasksToRender = tasks;
-    }
-
-    for (let i = 0; i < tasksToRender.length; i++) {
+    for (let i = 0; i < tasks.length; i++) {
+        
         // Create a new <li> element, that we will fill with task information.
         const li = document.createElement('li');
         li.className = 'list-item'; // add standard task class
@@ -138,11 +121,11 @@ function renderTasks() {
         const completeIcon = document.createElement('i'); // Create an empty icon element
         
         // depending on whether the task is done or open, add a class with relevant font-awesome icon
-        if (tasksToRender[i].status === 'done') {
+        if (tasks[i].status === 'done') {
             completeIcon.className = 'fa fa-check-circle statusButton';
-        } else if (tasksToRender[i].status === 'open') {
+        } else if (tasks[i].status === 'open') {
             completeIcon.className = 'fa fa-circle-thin statusButton';
-        } else if (tasksToRender[i].status === 'ongoing') {
+        } else if (tasks[i].status === 'ongoing') {
             completeIcon.className = 'fa fa-play-circle-o statusButton'
         }
 
@@ -150,11 +133,11 @@ function renderTasks() {
 
         // Create a new <span> element and add the task summary inside (i.e. "Wyniesc smieci")
         const taskSummary = document.createElement('span');
-        taskSummary.textContent = tasksToRender[i].summary;
-        if (tasksToRender[i].status === 'done') {
+        taskSummary.textContent = tasks[i].summary;
+        if (tasks[i].status === 'done') {
             li.appendChild(taskSummary);
             const taskDuration = document.createElement('span');
-            taskDuration.textContent = ' ' + tasksToRender[i].duration + 's';
+            taskDuration.textContent = ' ' + tasks[i].duration + 's';
             li.appendChild(taskDuration);
         } else {
             li.appendChild(taskSummary);   
