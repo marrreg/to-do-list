@@ -11,13 +11,13 @@ body {
 header {
     background-color: #b56969;
     width: 100%;
-    height: 50px;
+    height: 4vh;
     position: relative;
 }
 
 #logo-up {
     position: absolute;
-    bottom: -65%;
+    bottom: -82%;
     left: 2%;
     text-transform: uppercase;
 }
@@ -31,7 +31,7 @@ header {
 #logo-down {
     left: 5%;
     position: absolute;
-    bottom: -102%;
+    bottom: -128%;
     text-transform: uppercase;
 }
 
@@ -53,8 +53,7 @@ header {
     color: #22264b;
     text-transform: uppercase;
     font-weight: 700;
-    margin-right: 15px;
-    margin-left: 15px;
+    margin: 10px 15px 0 15px;
     opacity: 0.55;
 }
 
@@ -71,15 +70,16 @@ header {
     display: inline-block;
     color: #22264b;
     text-transform: uppercase;
-    margin-right: 20px;
+    margin: 10px 20px 0 0;
 }
 
 #list {
     width: 30%;
     margin: auto;
     background-color: white;
-    height: 90vh;
+    height: 92vh;
     position: relative;
+    font-family: 'Raleway', sans-serif;
 }
 
 #taskList {
@@ -96,6 +96,8 @@ header {
     margin-right: 10px;
     cursor: pointer;
     font-size: 0px;
+    transform: translateY(-50%);
+    top: 50%;
 /*    display: none;*/
 }
 
@@ -103,9 +105,17 @@ header {
     position: relative;
     width: 100%;
     list-style-type: none;
-    padding: 8px;
-    font-size: 13px;
-    margin-bottom: 3px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 20px 0;
+}
+
+#list .list-item span {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    padding-left: 25px;
+    max-width: 92%;
 }
 
 .list-item:hover .deleteButton::before {
@@ -149,6 +159,9 @@ i.fa.fa-circle-thin, i.fa.fa-check-circle, i.fa.fa-play-circle-o {
 
 .statusButton {
     cursor: pointer;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
 }
 
 .strikeElement {
@@ -158,7 +171,7 @@ i.fa.fa-circle-thin, i.fa.fa-check-circle, i.fa.fa-play-circle-o {
 footer {
     background-color: #15172e;
     width: 100%;
-    height: 50px;
+    height: 4vh;
     position: relative;
 }
 
@@ -168,6 +181,8 @@ footer p {
     transform: translateX(-50%);
     left: 50%;
     top: 0%;
+    margin: 0;
+    margin-top: 10px;
 }
 
 #icons-container {
@@ -177,10 +192,13 @@ footer p {
 }
 
 .icons {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     margin-right: 5px;
     display: inline-block;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 #facebook {
