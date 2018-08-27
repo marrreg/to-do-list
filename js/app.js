@@ -2,11 +2,12 @@
 
 let newTaskButton = document.getElementById('newTaskButton');
 let newTaskText = document.getElementById('newTaskText');
-let taskList = document.getElementById("taskList");
+let taskList = document.getElementById('taskList');
 let deleteButtons = document.getElementsByClassName('deleteButton');
 let statusButtons = document.getElementsByClassName('statusButton');
+let statusSelection = document.getElementById('status-selection');
 let tasks = []; // tasks is the main "storage" for Task objects in the application
-let tasksDone = [];
+let activeStatusSelection = 'open';
 
 // Task class represents a single Task.
 class Task {
@@ -59,6 +60,9 @@ function addNewTask(newTaskString) {
 
         console.log(tasks[tasks.length-1]);
 
+        // Once a new task is added, it seems reasonable to switch to open tasks view if not selected. Status setting is not yet extracted to a dedicated function, so simulating a click for now.
+        statusSelection.children[0].click();
+
         // Once the task is added, the task list is re-rendered (that is: the view is cleared and filled with all tasks in the array)
         renderTasks();  // NOTE: ANY CHANGE IN THE TASKS LIST SHOULD BE FOLLOWED BY RE-RENDERING THE VIEW
     } else {
@@ -82,20 +86,31 @@ function handleStatusClick(index) {
         console.log(tasks[index]);
     } else if (tasks[index].status === 'ongoing') {
         tasks[index].markDone();
-        tasksDone.push(tasks[index]);
-        console.log(tasksDone);
-        tasks.splice(index, 1);
     }
+    renderTasks();
+}
+
+function handleStatusSelectionClick(index, id) {
+    for (let i = 0; i < statusSelection.children.length; i++) {
+        statusSelection.children[i].className = '';
+    }
+    statusSelection.children[index].className = 'active';
+    activeStatusSelection = statusSelection.children[index].textContent;
+
     renderTasks();
 }
 
 function populateWithSampleTasks() {
     // Add some sample tasks to the tasks array, for testing purposes
-    tasks.push(new Task("Wyniesc smieci"));
-    tasks.push(new Task("Zrobic zakupy"));
-    tasks.push(new Task("Wyprowadzic psa"));
-    tasks.push(new Task("Stworzyc nowa aplikacje do zadan"));
-    tasks.push(new Task("Ugotowac obiad"));
+    tasks.push(new Task("Zrobic change request projektow ABC"));
+    tasks.push(new Task("Zrobic rzeczy z maila od abc.pl"));
+    tasks.push(new Task("Zorganizowac do firmy ABC (3 sztuki) + kabelki, ktore sa podobno trudnodostepne"));
+    tasks.push(new Task("Sprawdzic, czy da sie zestawic AB1-2 z AB dla ABC"));
+    tasks.push(new Task("Porozmawiac z Johnem na temat jego dostepnosci na ABC i odpisac Bridget"));
+    tasks.push(new Task("Zalogowac czas pracy"));
+    tasks.push(new Task("Zamowic obiad na jutro"));
+    tasks.push(new Task("zrobic wewnetrznego taska do ABC-155"));
+    tasks.push(new Task("zorganizowac rozwiazanie ABC-54"));
 }
 
 function renderTasks() {
@@ -103,6 +118,16 @@ function renderTasks() {
     taskList.innerHTML = '';
 
     for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].status === 'done') {
+            if (activeStatusSelection === 'open') {
+                continue;
+            }
+        } else {
+            if (activeStatusSelection === 'done') {
+                continue;
+            }
+        }
+        
         // Create a new <li> element, that we will fill with task information.
         const li = document.createElement('li');
         li.className = 'list-item'; // add standard task class
@@ -125,7 +150,6 @@ function renderTasks() {
         const taskSummary = document.createElement('span');
         taskSummary.textContent = tasks[i].summary;
         if (tasks[i].status === 'done') {
-            taskSummary.className = 'strikeElement';
             li.appendChild(taskSummary);
             const taskDuration = document.createElement('span');
             taskDuration.textContent = ' ' + tasks[i].duration + 's';
@@ -145,6 +169,24 @@ function renderTasks() {
     }
 
     addListEventListeners();
+}
+
+function renderStatusSelection() {
+    statusSelection.innerHTML = '';
+    for (let i = 0; i < statusSelectionOptions.length; i++) {
+        const p = document.createElement('p');
+        p.textContent = statusSelectionOptions[i].text;
+        p.id = statusSelectionOptions[i].id;
+
+        if (i != 1) {
+            // If the middle element is being generated, it should remain highlighted
+            p.className = 'light-text';
+        }
+
+        statusSelection.appendChild(p);
+    }
+
+    addStatusSelectionEventListeners();
 }
 
 function addListEventListeners() {
@@ -169,12 +211,23 @@ function addGeneralEventListeners() {
         addNewTask(newTaskText.value);
         newTaskText.value = '';
     });
+
     newTaskText.addEventListener('keydown', function(e){
         if(e.keyCode === 13) {
             addNewTask(newTaskText.value);
             newTaskText.value = '';
         }
     });
+
+    addStatusSelectionEventListeners();
+}
+
+function addStatusSelectionEventListeners() {
+    for (let i = 0; i < statusSelection.children.length; i++) {
+        statusSelection.children[i].addEventListener('click', function(event) {
+            handleStatusSelectionClick(i, this.id);
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {

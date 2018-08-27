@@ -41,23 +41,25 @@ header {
     font-weight: 700;
 }
 
-#status {
+#status-selection {
     position: absolute;
     transform: translateX(-50%);
     left: 50%;
+    cursor: pointer;
 }
 
-#status p {
+#status-selection p {
     display: inline-block;
     color: #22264b;
     text-transform: uppercase;
     font-weight: 700;
     margin-right: 15px;
     margin-left: 15px;
+    opacity: 0.55;
 }
 
-#status .light-text {
-    opacity: 0.55;
+#status-selection .active {
+    opacity: 1;
 }
 
 #login {
