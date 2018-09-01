@@ -29,8 +29,8 @@ class Task {
     }
 
     markOpen() {
-        // Change task's status (back) to open        
-        this.status = 'open';   
+        // Change task's status (back) to open
+        this.status = 'open';
     }
 
     markOngoing() {
@@ -127,14 +127,14 @@ function renderTasks() {
                 continue;
             }
         }
-        
+
         // Create a new <li> element, that we will fill with task information.
         const li = document.createElement('li');
         li.className = 'list-item'; // add standard task class
         li.id = i; // add id, uniquely representing the task. It is later used for all operations on the task
 
         const completeIcon = document.createElement('i'); // Create an empty icon element
-        
+
         // depending on whether the task is done or open, add a class with relevant font-awesome icon
         if (tasks[i].status === 'done') {
             completeIcon.className = 'fa fa-check-circle statusButton';
@@ -155,10 +155,10 @@ function renderTasks() {
             taskDuration.textContent = ' ' + tasks[i].duration + 's';
             li.appendChild(taskDuration);
         } else {
-            li.appendChild(taskSummary);   
+            li.appendChild(taskSummary);
         }
         // Add the freshly created <span> element to the <li>
-        
+
         // Add the delete icon (trashcan)
         const deleteIcon = document.createElement('i');
         deleteIcon.className = ['fa fa-trash deleteButton'];
