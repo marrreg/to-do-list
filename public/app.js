@@ -249,6 +249,8 @@ function ajaxAddNewTask(newTaskString) {
       console.log(`POST request sent. DATA: ${data}`)
     }
   });
+
+  console.log("Adding new task finished");
 }
 
 function addAllEventListeners() {
