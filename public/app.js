@@ -204,6 +204,10 @@ function addListEventListeners() {
     }
 }
 
+function ajaxAddNewTask {
+  console.log("Adding new task to the database!");
+}
+
 function addAllEventListeners() {
   document.addEventListener('click', function(e) {
     let el = e.target;
@@ -212,6 +216,10 @@ function addAllEventListeners() {
     let parentId = el.parentNode.id;
 
     console.log(`Base element: ${el}, classList: ${classList}, id: ${id}, parentId: ${parentId}`);
+
+    if (id == 'newTaskButton') {
+      ajaxAddNewTask();
+    }
   });
 }
 

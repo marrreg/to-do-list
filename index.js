@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const taskCtrl = require('./controllers/task.server.controller.js');
 
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mongopwd = require('./mongopwd.js'); // May need to replace with the one in the bottom, if problems with imports arise
 // const mongopwd = require(path.join(__dirname, 'mongopwd.js'));
@@ -13,6 +14,8 @@ const app = express();
 const port = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
   app.render('index.html');

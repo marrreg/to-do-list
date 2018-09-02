@@ -2,7 +2,6 @@ var Task = require('../models/task.server.model.js');
 
 exports.create = function(req, res) {
   console.log("Creating new task in db!");
-  console.log(`req: ${req.taskDuration}, res: ${res}`);
   var entry = new Task({
     taskStatus: req.body.taskStatus,
     startTimestamp: req.body.startTimestamp,
