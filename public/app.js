@@ -237,7 +237,18 @@ function ajaxAddNewTask(newTaskString) {
     taskDuration: null,
     taskEstimate: newTaskEstimate
   }
+
   console.log(`Adding new task to the database!: ${taskToAdd.taskEstimate}, ${taskToAdd.taskSummary}`);
+
+  $.ajax({
+    url: '/task',
+    type: 'POST',
+    data: taskToAdd,
+    contentType: 'application/json',
+    success: function(data) {
+      console.log(`POST request sent. DATA: ${data}`)
+    }
+  });
 }
 
 function addAllEventListeners() {
