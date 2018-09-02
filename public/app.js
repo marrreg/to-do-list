@@ -235,16 +235,12 @@ function ajaxAddNewTask(newTaskString) {
     taskEstimate: newTaskEstimate
   }
 
-  console.log(`Adding new task to the database!: ${taskToAdd.taskEstimate}, ${taskToAdd.taskSummary}`);
-
   $.ajax({
     url: '/task',
     type: 'POST',
     data: taskToAdd,
     // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
   });
-
-  // console.log("Adding new task finished");
 }
 
 function addAllEventListeners() {
@@ -254,12 +250,10 @@ function addAllEventListeners() {
     let id = el.id;
     let parentId = el.parentNode.id;
 
-    console.log(`Base element: ${el}, classList: ${classList}, id: ${id}, parentId: ${parentId}`);
-
     if (id == 'newTaskButton') {
       // This is problematic, because when we click exactly on the icon inside the button,
       // it is not recorded as a click on newTaskButton and hence, not recognized here.
-      console.log("new task text from listener: " + newTaskText);
+
       // ajaxAddNewTask(newTaskText.value); // This should be used eventually
       ajaxAddNewTask(mostRecentTaskText); // Used for development to work with with 2 sets of parallel event listeners
     }
