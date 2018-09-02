@@ -1,7 +1,5 @@
 'use strict';
 
-let $ = require('jquery');
-
 let newTaskButton = document.getElementById('newTaskButton');
 let newTaskText = document.getElementById('newTaskText');
 let taskList = document.getElementById('taskList');

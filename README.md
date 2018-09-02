@@ -6,3 +6,4 @@ toodoo is an app with a mission to assist individuals with making concious workl
   - Execute `npm install` in the project root directory.
   - Execute `npm start` to start a development server on port 3000.
   - Navigate to http://localhost:3000.
+  - NOTE: In order to connect to MongoDB, it is required to have mongopwd.js file in the root directory of the project, storing password to MongoDB cluster. If you wish to use your own DB, changes in code are necessary.
