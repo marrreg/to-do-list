@@ -19,6 +19,7 @@
   "homepage": "https://github.com/marrreg/to-do-list#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "jquery": "^3.3.1",
     "mongoose": "^5.2.12"
   }
 }
