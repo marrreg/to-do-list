@@ -191,20 +191,6 @@ function renderStatusSelection() {
 
 function addListEventListeners() {
     // Add event listeners to the list items. Executed for each tasks re-render.
-    // document.addEventListener('click', function(e) {
-    //   let el = e.target;
-    //   let classList = el.classList;
-    //   let id = el.id;
-    //   let parentId = el.parentNode.id;
-
-    //   console.log(`the id is ${id} or ${parentId}`);
-
-    //   if (classList.contains('deleteButton')) {
-    //     deleteTask(parentId);
-    //     console.log(`deleting ${parentId}`);
-    //   };
-    // });
-
     for (let i = 0; i < deleteButtons.length; i++) {
         deleteButtons[i].addEventListener('click', function(event) {
             deleteTask(this.parentNode.id);
@@ -216,6 +202,17 @@ function addListEventListeners() {
             handleStatusClick(this.parentNode.id);
         });
     }
+}
+
+function addAllEventListeners() {
+  document.addEventListener('click', function(e) {
+    let el = e.target;
+    let classList = el.classList;
+    let id = el.id;
+    let parentId = el.parentNode.id;
+
+    console.log(`Base element: ${el}, classList: ${classList}, id: ${id}, parentId: ${parentId}`);
+  });
 }
 
 function addGeneralEventListeners() {
@@ -247,6 +244,7 @@ function addStatusSelectionEventListeners() {
 document.addEventListener('DOMContentLoaded', function () {
     // Start operating on page contents only once the document is available
     addGeneralEventListeners();
+    addAllEventListeners();
     populateWithSampleTasks();
     renderTasks();
 });
