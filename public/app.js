@@ -9,6 +9,8 @@ let statusSelection = document.getElementById('status-selection');
 let tasks = []; // tasks is the main "storage" for Task objects in the application
 let activeStatusSelection = 'open';
 
+let mostRecentTaskText = ''; // Used only during the intermediary period, while moving to MongoDB
+
 // Task class represents a single Task.
 class Task {
     constructor(summary, estimate) {
@@ -74,6 +76,20 @@ function deleteTask(index) {
     // Remove the task with provided index. Once it's done, all indexes are moved respectively
     tasks.splice(index, 1);
     renderTasks();
+}
+
+function parseTaskText(taskString) {
+  let openingBracketIndex = taskString.indexOf("[");
+  let closingBracketIndex = taskString.indexOf("]");
+  let estimate = 0;
+  let summary = taskString;
+
+  if (openingBracketIndex != -1 && closingBracketIndex != -1) {
+      estimate = parseInt(taskString.substring(openingBracketIndex + 1, closingBracketIndex));
+      summary = taskString.substring(0, openingBracketIndex).trim() + taskString.substring(closingBracketIndex + 1);
+  }
+
+  return { summary: summary, estimate: estimate };
 }
 
 function handleStatusClick(index) {
@@ -204,8 +220,24 @@ function addListEventListeners() {
     }
 }
 
-function ajaxAddNewTask {
-  console.log("Adding new task to the database!");
+function ajaxAddNewTask(newTaskString) {
+  let newTaskStringParsed = parseTaskText(newTaskString);
+
+  let newTaskSummary = newTaskStringParsed.summary;
+  let newTaskEstimate = newTaskStringParsed.estimate;
+
+  console.log(`New Task estimate: ${newTaskEstimate}`);
+  console.log(`new task summary: ${newTaskSummary}`);
+
+  var taskToAdd = {
+    taskSummary: newTaskSummary,
+    taskStatus: "open",
+    startTimestamp: Date.now,
+    stopTimestamp: null,
+    taskDuration: null,
+    taskEstimate: newTaskEstimate
+  }
+  console.log(`Adding new task to the database!: ${taskToAdd.taskEstimate}, ${taskToAdd.taskSummary}`);
 }
 
 function addAllEventListeners() {
@@ -218,7 +250,11 @@ function addAllEventListeners() {
     console.log(`Base element: ${el}, classList: ${classList}, id: ${id}, parentId: ${parentId}`);
 
     if (id == 'newTaskButton') {
-      ajaxAddNewTask();
+      // This is problematic, because when we click exactly on the icon inside the button,
+      // it is not recorded as a click on newTaskButton and hence, not recognized here.
+      console.log("new task text from listener: " + newTaskText);
+      // ajaxAddNewTask(newTaskText.value); // This should be used eventually
+      ajaxAddNewTask(mostRecentTaskText); // Used for development to work with with 2 sets of parallel event listeners
     }
   });
 }
@@ -228,12 +264,14 @@ function addGeneralEventListeners() {
     newTaskButton.addEventListener('click', function () {
         // When a new task is added, it should be appended to the tasks array and the text field shall be cleared
         addNewTask(newTaskText.value);
+        mostRecentTaskText = newTaskText.value; // todo: remove later (see the comment for that variable)
         newTaskText.value = '';
     });
 
     newTaskText.addEventListener('keydown', function(e){
         if(e.keyCode === 13) {
             addNewTask(newTaskText.value);
+            mostRecentTaskText = newTaskText.value; // todo: remove later (see the comment for that variable)
             newTaskText.value = '';
         }
     });
@@ -251,7 +289,7 @@ function addStatusSelectionEventListeners() {
 
 document.addEventListener('DOMContentLoaded', function () {
     // Start operating on page contents only once the document is available
-    addGeneralEventListeners();
+    addGeneralEventListeners(); // This needs to be commented out if we wish to use the new, document-based listeners
     addAllEventListeners();
     populateWithSampleTasks();
     renderTasks();
