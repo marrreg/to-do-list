@@ -26,4 +26,9 @@ app.post('/task', function(req, res) {
   return taskCtrl.create(req, res);
 });
 
+app.get('/tasks', function(req, res) {
+  console.log("Got GET!");
+  return taskCtrl.getAll(req, res);
+});
+
 app.listen(port, () => console.log("Server started on port 3000..."));

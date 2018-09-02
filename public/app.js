@@ -243,6 +243,16 @@ function ajaxAddNewTask(newTaskString) {
   });
 }
 
+function ajaxGetAllTasks(handleData) {
+  $.ajax({
+    url: '/tasks',
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) { handleData(data); }
+    // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
+  });
+}
+
 function addAllEventListeners() {
   document.addEventListener('click', function(e) {
     let el = e.target;
