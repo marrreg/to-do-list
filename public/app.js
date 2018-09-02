@@ -19,7 +19,7 @@ class Task {
         this.stopTimestamp = '';
         this.duration = 0;
         this.estimate = estimate;
-    }
+    } // Covered in the controller
 
     markDone() {
         // Change task's status to done
@@ -191,6 +191,20 @@ function renderStatusSelection() {
 
 function addListEventListeners() {
     // Add event listeners to the list items. Executed for each tasks re-render.
+    // document.addEventListener('click', function(e) {
+    //   let el = e.target;
+    //   let classList = el.classList;
+    //   let id = el.id;
+    //   let parentId = el.parentNode.id;
+
+    //   console.log(`the id is ${id} or ${parentId}`);
+
+    //   if (classList.contains('deleteButton')) {
+    //     deleteTask(parentId);
+    //     console.log(`deleting ${parentId}`);
+    //   };
+    // });
+
     for (let i = 0; i < deleteButtons.length; i++) {
         deleteButtons[i].addEventListener('click', function(event) {
             deleteTask(this.parentNode.id);
