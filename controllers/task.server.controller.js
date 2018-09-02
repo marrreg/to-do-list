@@ -12,7 +12,4 @@ exports.create = function(req, res) {
   })
 
   entry.save();
-
-  res.redirect(301, '/');
 };
-

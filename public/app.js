@@ -226,9 +226,6 @@ function ajaxAddNewTask(newTaskString) {
   let newTaskSummary = newTaskStringParsed.summary;
   let newTaskEstimate = newTaskStringParsed.estimate;
 
-  console.log(`New Task estimate: ${newTaskEstimate}`);
-  console.log(`new task summary: ${newTaskSummary}`);
-
   var taskToAdd = {
     taskSummary: newTaskSummary,
     taskStatus: "open",
@@ -244,13 +241,10 @@ function ajaxAddNewTask(newTaskString) {
     url: '/task',
     type: 'POST',
     data: taskToAdd,
-    contentType: 'application/json',
-    success: function(data) {
-      console.log(`POST request sent. DATA: ${data}`)
-    }
+    // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
   });
 
-  console.log("Adding new task finished");
+  // console.log("Adding new task finished");
 }
 
 function addAllEventListeners() {
