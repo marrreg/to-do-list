@@ -131,6 +131,7 @@ function populateWithSampleTasks() {
 
 function renderTasks() {
     // Clear the tasks view (taskList is the main <ul> of the application)
+
     taskList.innerHTML = '';
 
     for (let i = 0; i < tasks.length; i++) {
@@ -243,7 +244,7 @@ function ajaxAddNewTask(newTaskString) {
   });
 }
 
-function ajaxGetAllTasks(handleData) {
+function executeWithAllTasks(handleData) {
   $.ajax({
     url: '/tasks',
     type: 'GET',
@@ -255,6 +256,8 @@ function ajaxGetAllTasks(handleData) {
 
 function addAllEventListeners() {
   document.addEventListener('click', function(e) {
+    var fn = function(tlist) { console.log(tlist); }
+    executeWithAllTasks(fn);
     let el = e.target;
     let classList = el.classList;
     let id = el.id;
