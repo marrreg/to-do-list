@@ -129,7 +129,7 @@ function populateWithSampleTasks() {
     tasks.push(new Task("zorganizowac rozwiazanie ABC-54"));
 }
 
-function renderTasks() {
+function renderTasks(tasks) {
     // Clear the tasks view (taskList is the main <ul> of the application)
 
     taskList.innerHTML = '';
