@@ -256,8 +256,6 @@ function executeWithAllTasks(handleData) {
 
 function addAllEventListeners() {
   document.addEventListener('click', function(e) {
-    var fn = function(tlist) { console.log(tlist); }
-    executeWithAllTasks(fn);
     let el = e.target;
     let classList = el.classList;
     let id = el.id;
@@ -306,5 +304,6 @@ document.addEventListener('DOMContentLoaded', function () {
     addGeneralEventListeners(); // This needs to be commented out if we wish to use the new, document-based listeners
     addAllEventListeners();
     populateWithSampleTasks();
-    renderTasks();
+    executeWithAllTasks(renderTasks);
+    // renderTasks(); // if this is used, the function definition should be modified to not take any arguments
 });
