@@ -66,7 +66,7 @@ function addNewTask(newTaskString) {
         statusSelection.children[0].click();
 
         // Once the task is added, the task list is re-rendered (that is: the view is cleared and filled with all tasks in the array)
-        renderTasks();  // NOTE: ANY CHANGE IN THE TASKS LIST SHOULD BE FOLLOWED BY RE-RENDERING THE VIEW
+        executeWithAllTasks(renderTasks);  // NOTE: ANY CHANGE IN THE TASKS LIST SHOULD BE FOLLOWED BY RE-RENDERING THE VIEW
     } else {
         console.log("Attempted to add an empty task.")
     }
@@ -75,7 +75,7 @@ function addNewTask(newTaskString) {
 function deleteTask(index) {
     // Remove the task with provided index. Once it's done, all indexes are moved respectively
     tasks.splice(index, 1);
-    renderTasks();
+    executeWithAllTasks(renderTasks);
 }
 
 function parseTaskText(taskString) {
@@ -103,7 +103,7 @@ function handleStatusClick(index) {
     } else if (tasks[index].status === 'ongoing') {
         tasks[index].markDone();
     }
-    renderTasks();
+    executeWithAllTasks(renderTasks);
 }
 
 function handleStatusSelectionClick(index, id) {
@@ -113,7 +113,7 @@ function handleStatusSelectionClick(index, id) {
     statusSelection.children[index].className = 'active';
     activeStatusSelection = statusSelection.children[index].textContent;
 
-    renderTasks();
+    executeWithAllTasks(renderTasks);
 }
 
 function populateWithSampleTasks() {
@@ -305,5 +305,4 @@ document.addEventListener('DOMContentLoaded', function () {
     addAllEventListeners();
     populateWithSampleTasks();
     executeWithAllTasks(renderTasks);
-    // renderTasks(); // if this is used, the function definition should be modified to not take any args
 });
