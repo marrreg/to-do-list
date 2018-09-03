@@ -31,8 +31,14 @@ app.get('/tasks', function(req, res) {
   return taskCtrl.getAll(req, res);
 });
 
-app.delete('/tasks/:id', function(req, res) {
+app.route('/task/:id').delete(function(req, res) {
+  console.log('Deleting');
+  console.log(req.params);
   return taskCtrl.delete(req, res);
+});
+
+app.route('/').delete(function (req, res) {
+  res.send('DELETE request to homepage');
 });
 
 app.listen(port, () => console.log("Server started on port 3000..."));

@@ -74,6 +74,7 @@ function addNewTask(newTaskString) {
 
 function deleteTask(index) {
     // Remove the task with provided index. Once it's done, all indexes are moved respectively
+    console.log('Deleting');
     $.ajax({
       url: '/task/' + index,
       type: 'DELETE',
