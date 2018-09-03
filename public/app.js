@@ -305,5 +305,5 @@ document.addEventListener('DOMContentLoaded', function () {
     addAllEventListeners();
     populateWithSampleTasks();
     executeWithAllTasks(renderTasks);
-    // renderTasks(); // if this is used, the function definition should be modified to not take any arguments
+    // renderTasks(); // if this is used, the function definition should be modified to not take any args
 });
