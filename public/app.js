@@ -148,7 +148,7 @@ function renderTasks(tasks) {
         // Create a new <li> element, that we will fill with task information.
         const li = document.createElement('li');
         li.className = 'list-item'; // add standard task class
-        li.id = i; // add id, uniquely representing the task. It is later used for all operations on the task
+        li.id = tasks[i]._id; // add id, uniquely representing the task. It is later used for all operations on the task
 
         const completeIcon = document.createElement('i'); // Create an empty icon element
 
