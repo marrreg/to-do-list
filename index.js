@@ -31,4 +31,8 @@ app.get('/tasks', function(req, res) {
   return taskCtrl.getAll(req, res);
 });
 
+app.delete('/tasks/:id', function(req, res) {
+  return taskCtrl.delete(req, res);
+});
+
 app.listen(port, () => console.log("Server started on port 3000..."));

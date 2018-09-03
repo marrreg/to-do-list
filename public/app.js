@@ -74,7 +74,11 @@ function addNewTask(newTaskString) {
 
 function deleteTask(index) {
     // Remove the task with provided index. Once it's done, all indexes are moved respectively
-    tasks.splice(index, 1);
+    $.ajax({
+      url: '/task/' + index,
+      type: 'DELETE',
+      // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
+    });
     executeWithAllTasks(renderTasks);
 }
 
@@ -239,7 +243,7 @@ function ajaxAddNewTask(newTaskString) {
   $.ajax({
     url: '/task',
     type: 'POST',
-    data: taskToAdd,
+    data: taskToAdd
     // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
   });
 }
