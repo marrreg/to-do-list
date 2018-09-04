@@ -1,4 +1,6 @@
 var Task = require('../models/task.server.model.js');
+var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
 
 exports.create = function(req, res) {
   console.log("Starting to add task");
@@ -12,7 +14,13 @@ exports.create = function(req, res) {
   })
 
   console.log("Saving task");
-  entry.save(() => { console.log("Task saved"); });
+  entry.save((err) => {
+    if (err) {
+      return res.status(500).send(err);
+    } else {
+      return res.status(200).send();
+    }
+  })
 };
 
 exports.getAll = function(req, res) {
@@ -26,5 +34,13 @@ exports.getAll = function(req, res) {
 };
 
 exports.delete = function(req, res) {
-  Task.find({ _id: req.params.id }).remove().exec();
+  // Task.find({ _id: req.params.id }).remove().exec();
+  Task.deleteOne({ _id: ObjectId(req.params.id) }, (err) => {
+    if (err) {
+      return res.status(500).send(err);
+    } else {
+      console.log("Task deleted!");
+      return res.status(200).send();
+    }
+  });
 }

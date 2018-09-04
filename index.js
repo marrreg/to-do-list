@@ -25,7 +25,7 @@ app.get('/', function(req, res) {
 })
 
 app.post('/task', function(req, res) {
-  console.log(req.body.id);
+  console.log(req.body.summary);
   return taskCtrl.create(req, res);
 });
 
