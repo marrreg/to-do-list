@@ -3,72 +3,9 @@
 let newTaskButton = document.getElementById('newTaskButton');
 let newTaskText = document.getElementById('newTaskText');
 let taskList = document.getElementById('taskList');
-let deleteButtons = document.getElementsByClassName('deleteButton');
 let statusButtons = document.getElementsByClassName('statusButton');
 let statusSelection = document.getElementById('status-selection');
-let tasks = []; // tasks is the main "storage" for Task objects in the application
 let activeStatusSelection = 'open';
-
-// Task class represents a single Task.
-class Task {
-    constructor(summary, estimate) {
-        // Summary is the brief description of the task, status represents whether it's open or done
-        this.summary = summary;
-        this.status = 'open';
-        this.startTimestamp = '';
-        this.stopTimestamp = '';
-        this.duration = 0;
-        this.estimate = estimate;
-    } // Covered in the controller
-
-    markDone() {
-        // Change task's status to done
-        this.status = 'done';
-        this.stopTimestamp = new Date;
-        this.duration = Math.round((this.stopTimestamp - this.startTimestamp)/1000);
-    }
-
-    markOpen() {
-        // Change task's status (back) to open
-        this.status = 'open';
-    }
-
-    markOngoing() {
-        this.status = 'ongoing';
-        this.startTimestamp = new Date;
-    }
-
-    setEstimate(estimateInSeconds) {
-        this.estimate = estimateInSeconds;
-    }
-}
-
-function addNewTask(newTaskString) {
-    // If there is something in the text field, a new Task object with provided summary shall be added to the tasks array
-    if (newTaskString) {
-        let openingBracketIndex = newTaskString.indexOf("[");
-        let closingBracketIndex = newTaskString.indexOf("]");
-        let newTaskEstimate = 0;
-        let newTaskSummary = newTaskString;
-
-        if (openingBracketIndex != -1 && closingBracketIndex != -1) {
-            newTaskEstimate = parseInt(newTaskString.substring(openingBracketIndex + 1, closingBracketIndex));
-            newTaskSummary = newTaskString.substring(0, openingBracketIndex).trim() + newTaskString.substring(closingBracketIndex + 1);
-        }
-
-        tasks.push(new Task(newTaskSummary, newTaskEstimate));
-
-        console.log(tasks[tasks.length-1]);
-
-        // Once a new task is added, it seems reasonable to switch to open tasks view if not selected. Status setting is not yet extracted to a dedicated function, so simulating a click for now.
-        statusSelection.children[0].click();
-
-        // Once the task is added, the task list is re-rendered (that is: the view is cleared and filled with all tasks in the array)
-        executeWithAllTasks(renderTasks);  // NOTE: ANY CHANGE IN THE TASKS LIST SHOULD BE FOLLOWED BY RE-RENDERING THE VIEW
-    } else {
-        console.log("Attempted to add an empty task.")
-    }
-}
 
 function deleteTask(id) {
     // Remove the task with provided index. Once it's done, all indexes are moved respectively
@@ -103,7 +40,6 @@ function handleStatusClick(index) {
     if (tasks[index].status === 'open') {
         tasks[index].markOngoing();
         tasks.unshift(tasks.splice(index, 1)[0]);
-        console.log(tasks[index]);
     } else if (tasks[index].status === 'ongoing') {
         tasks[index].markDone();
     }
@@ -118,19 +54,6 @@ function handleStatusSelectionClick(index, id) {
     activeStatusSelection = statusSelection.children[index].textContent;
 
     executeWithAllTasks(renderTasks);
-}
-
-function populateWithSampleTasks() {
-    // Add some sample tasks to the tasks array, for testing purposes
-    tasks.push(new Task("Zrobic change request projektow ABC"));
-    tasks.push(new Task("Zrobic rzeczy z maila od abc.pl"));
-    tasks.push(new Task("Zorganizowac do firmy ABC (3 sztuki) + kabelki, ktore sa podobno trudnodostepne"));
-    tasks.push(new Task("Sprawdzic, czy da sie zestawic AB1-2 z AB dla ABC"));
-    tasks.push(new Task("Porozmawiac z Johnem na temat jego dostepnosci na ABC i odpisac Bridget"));
-    tasks.push(new Task("Zalogowac czas pracy"));
-    tasks.push(new Task("Zamowic obiad na jutro"));
-    tasks.push(new Task("zrobic wewnetrznego taska do ABC-155"));
-    tasks.push(new Task("zorganizowac rozwiazanie ABC-54"));
 }
 
 function renderTasks(tasks) {
@@ -211,13 +134,6 @@ function renderStatusSelection() {
 }
 
 function addListEventListeners() {
-    // Add event listeners to the list items. Executed for each tasks re-render.
-    // for (let i = 0; i < deleteButtons.length; i++) {
-    //     deleteButtons[i].addEventListener('click', function(event) {
-    //         deleteTask(this.parentNode.id);
-    //     });
-    // }
-
     for (let i = 0; i < statusButtons.length; i++) {
         statusButtons[i].addEventListener('click', function(event) {
             handleStatusClick(this.parentNode.id);
@@ -226,26 +142,34 @@ function addListEventListeners() {
 }
 
 function ajaxAddNewTask(newTaskString) {
-  let newTaskStringParsed = parseTaskText(newTaskString);
+  if (newTaskString) {
 
-  let newTaskSummary = newTaskStringParsed.summary;
-  let newTaskEstimate = newTaskStringParsed.estimate;
+    let newTaskStringParsed = parseTaskText(newTaskString);
 
-  var taskToAdd = {
-    summary: newTaskSummary,
-    status: "open",
-    startTimestamp: Date.now,
-    stopTimestamp: null,
-    duration: null,
-    estimate: newTaskEstimate
+    let newTaskSummary = newTaskStringParsed.summary;
+    let newTaskEstimate = newTaskStringParsed.estimate;
+
+    var taskToAdd = {
+      summary: newTaskSummary,
+      status: "open",
+      startTimestamp: Date.now,
+      stopTimestamp: null,
+      duration: null,
+      estimate: newTaskEstimate
+    }
+
+    $.ajax({
+      url: '/task',
+      type: 'POST',
+      data: taskToAdd
+      // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
+    });
+
+    newTaskText.value = '';
+    executeWithAllTasks(renderTasks);
+  } else {
+    console.log("Attempted to add an empty task.");
   }
-
-  $.ajax({
-    url: '/task',
-    type: 'POST',
-    data: taskToAdd
-    // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
-  });
 }
 
 function executeWithAllTasks(handleData) {
@@ -266,47 +190,21 @@ function addAllEventListeners() {
     let id = el.id;
     let parentId = el.parentNode.id;
 
-    console.log(classList);
-    console.log($(el).hasClass("deleteButton"));
-
     if (id === 'newTaskButton') {
       // This is problematic, because when we click exactly on the icon inside the button,
       // it is not recorded as a click on newTaskButton and hence, not recognized here.
 
       ajaxAddNewTask(newTaskText.value); // This should be used eventually
     } else if ($(el).hasClass("deleteButton")) {
-      console.log(parentId);
       deleteTask(parentId);
     };
   });
 
   document.addEventListener('keydown', function(e) {
     if (e.keyCode === 13) {
-      addNewTask(newTaskText.value);
-      mostRecentTaskText = newTaskText.value; // todo: remove later (see the comment for that variable)
-      newTaskText.value = '';
+      ajaxAddNewTask(newTaskText.value);
     }
   });
-}
-
-function addGeneralEventListeners() {
-    // Add event listeners visible at all times, such as new task button
-    newTaskButton.addEventListener('click', function () {
-        // When a new task is added, it should be appended to the tasks array and the text field shall be cleared
-        addNewTask(newTaskText.value);
-        mostRecentTaskText = newTaskText.value; // todo: remove later (see the comment for that variable)
-        newTaskText.value = '';
-    });
-
-    newTaskText.addEventListener('keydown', function(e){
-        if (e.keyCode === 13) {
-            addNewTask(newTaskText.value);
-            mostRecentTaskText = newTaskText.value; // todo: remove later (see the comment for that variable)
-            newTaskText.value = '';
-        }
-    });
-
-    addStatusSelectionEventListeners();
 }
 
 function addStatusSelectionEventListeners() {
@@ -319,8 +217,7 @@ function addStatusSelectionEventListeners() {
 
 document.addEventListener('DOMContentLoaded', function () {
     // Start operating on page contents only once the document is available
-    addGeneralEventListeners(); // This needs to be commented out if we wish to use the new, document-based listeners
+    addStatusSelectionEventListeners();
     addAllEventListeners();
-    populateWithSampleTasks();
     executeWithAllTasks(renderTasks);
 });
