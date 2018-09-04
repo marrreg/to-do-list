@@ -24,5 +24,6 @@ exports.getAll = function(req, res) {
 };
 
 exports.delete = function(req, res) {
+  console.log(req.params.id);
   Task.find({ _id: req.params.id }).remove().exec();
 }
