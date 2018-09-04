@@ -77,9 +77,10 @@ function deleteTask(id) {
     console.log('Deleting: ' + id);
     $.ajax({
       url: '/task/' + id,
-      type: 'DELETE',
+      type: 'DELETE'
       // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
     });
+
     executeWithAllTasks(renderTasks);
 }
 
@@ -233,12 +234,12 @@ function ajaxAddNewTask(newTaskString) {
   let newTaskEstimate = newTaskStringParsed.estimate;
 
   var taskToAdd = {
-    taskSummary: newTaskSummary,
-    taskStatus: "open",
+    summary: newTaskSummary,
+    status: "open",
     startTimestamp: Date.now,
     stopTimestamp: null,
-    taskDuration: null,
-    taskEstimate: newTaskEstimate
+    duration: null,
+    estimate: newTaskEstimate
   }
 
   $.ajax({

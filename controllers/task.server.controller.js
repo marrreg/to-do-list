@@ -1,16 +1,18 @@
 var Task = require('../models/task.server.model.js');
 
 exports.create = function(req, res) {
+  console.log("Starting to add task");
   var entry = new Task({
-    summary: req.body.taskSummary,
-    status: req.body.taskStatus,
+    summary: req.body.summary,
+    status: req.body.status,
     startTimestamp: req.body.startTimestamp,
     stopTimestamp: req.body.stopTimestamp,
-    duration: req.body.taskDuration,
-    estimate: req.body.taskEstimate
+    duration: req.body.duration,
+    estimate: req.body.estimate
   })
 
-  entry.save();
+  console.log("Saving task");
+  entry.save(() => { console.log("Task saved"); });
 };
 
 exports.getAll = function(req, res) {
@@ -24,6 +26,5 @@ exports.getAll = function(req, res) {
 };
 
 exports.delete = function(req, res) {
-  console.log(req.params.id);
   Task.find({ _id: req.params.id }).remove().exec();
 }

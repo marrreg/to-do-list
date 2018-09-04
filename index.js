@@ -7,7 +7,10 @@ const mongoose = require('mongoose');
 const mongopwd = require('./mongopwd.js'); // May need to replace with the one in the bottom, if problems with imports arise
 // const mongopwd = require(path.join(__dirname, 'mongopwd.js'));
 
-mongoose.connect(`mongodb+srv://tddb-admin:${mongopwd}@tooodoo-db-04nm5.mongodb.net/test?retryWrites=true`)
+mongoose.connect(
+  `mongodb+srv://tddb-admin:${mongopwd}@tooodoo-db-04nm5.mongodb.net/test?retryWrites=true`,
+  { useNewUrlParser: true }
+);
 
 const app = express();
 
@@ -22,7 +25,7 @@ app.get('/', function(req, res) {
 })
 
 app.post('/task', function(req, res) {
-  console.log("Got POST!");
+  console.log(req.body.id);
   return taskCtrl.create(req, res);
 });
 
@@ -32,8 +35,7 @@ app.get('/tasks', function(req, res) {
 });
 
 app.route('/task/:id').delete(function(req, res) {
-  console.log('Deleting');
-  console.log(req.params);
+  console.log("Got DELETE!");
   return taskCtrl.delete(req, res);
 });
 
