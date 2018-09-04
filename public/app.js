@@ -9,8 +9,6 @@ let statusSelection = document.getElementById('status-selection');
 let tasks = []; // tasks is the main "storage" for Task objects in the application
 let activeStatusSelection = 'open';
 
-let mostRecentTaskText = ''; // Used only during the intermediary period, while moving to MongoDB
-
 // Task class represents a single Task.
 class Task {
     constructor(summary, estimate) {
@@ -214,11 +212,11 @@ function renderStatusSelection() {
 
 function addListEventListeners() {
     // Add event listeners to the list items. Executed for each tasks re-render.
-    for (let i = 0; i < deleteButtons.length; i++) {
-        deleteButtons[i].addEventListener('click', function(event) {
-            deleteTask(this.parentNode.id);
-        });
-    }
+    // for (let i = 0; i < deleteButtons.length; i++) {
+    //     deleteButtons[i].addEventListener('click', function(event) {
+    //         deleteTask(this.parentNode.id);
+    //     });
+    // }
 
     for (let i = 0; i < statusButtons.length; i++) {
         statusButtons[i].addEventListener('click', function(event) {
@@ -262,17 +260,31 @@ function executeWithAllTasks(handleData) {
 
 function addAllEventListeners() {
   document.addEventListener('click', function(e) {
+    // let el = $(e.target);
     let el = e.target;
     let classList = el.classList;
     let id = el.id;
     let parentId = el.parentNode.id;
 
-    if (id == 'newTaskButton') {
+    console.log(classList);
+    console.log($(el).hasClass("deleteButton"));
+
+    if (id === 'newTaskButton') {
       // This is problematic, because when we click exactly on the icon inside the button,
       // it is not recorded as a click on newTaskButton and hence, not recognized here.
 
-      // ajaxAddNewTask(newTaskText.value); // This should be used eventually
-      ajaxAddNewTask(mostRecentTaskText); // Used for development to work with with 2 sets of parallel event listeners
+      ajaxAddNewTask(newTaskText.value); // This should be used eventually
+    } else if ($(el).hasClass("deleteButton")) {
+      console.log(parentId);
+      deleteTask(parentId);
+    };
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.keyCode === 13) {
+      addNewTask(newTaskText.value);
+      mostRecentTaskText = newTaskText.value; // todo: remove later (see the comment for that variable)
+      newTaskText.value = '';
     }
   });
 }
@@ -287,7 +299,7 @@ function addGeneralEventListeners() {
     });
 
     newTaskText.addEventListener('keydown', function(e){
-        if(e.keyCode === 13) {
+        if (e.keyCode === 13) {
             addNewTask(newTaskText.value);
             mostRecentTaskText = newTaskText.value; // todo: remove later (see the comment for that variable)
             newTaskText.value = '';
