@@ -34,6 +34,10 @@ app.get('/tasks', function(req, res) {
   return taskCtrl.getAll(req, res);
 });
 
+app.get('/task/:id', function(req, res) {
+  return taskCtrl.getOne(req, res);
+});
+
 app.route('/task/:id').delete(function(req, res) {
   console.log("Got DELETE!");
   return taskCtrl.delete(req, res);

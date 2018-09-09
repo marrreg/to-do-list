@@ -43,4 +43,14 @@ exports.delete = function(req, res) {
       return res.status(200).send();
     }
   });
+};
+
+exports.getOne = function(req, res) {
+  Task.findById(req.params.id, (err, obj) => {
+    if (err) {
+      return res.status(500).send(err);
+    } else {
+      return res.status(200).send(obj);
+    }
+  });
 }

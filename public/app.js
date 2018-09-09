@@ -7,18 +7,6 @@ let statusButtons = document.getElementsByClassName('statusButton');
 let statusSelection = document.getElementById('status-selection');
 let activeStatusSelection = 'open';
 
-function deleteTask(id) {
-    // Remove the task with provided index. Once it's done, all indexes are moved respectively
-    console.log('Deleting: ' + id);
-    $.ajax({
-      url: '/task/' + id,
-      type: 'DELETE'
-      // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
-    });
-
-    executeWithAllTasks(renderTasks);
-}
-
 function parseTaskText(taskString) {
   let openingBracketIndex = taskString.indexOf("[");
   let closingBracketIndex = taskString.indexOf("]");
@@ -33,8 +21,59 @@ function parseTaskText(taskString) {
   return { summary: summary, estimate: estimate };
 }
 
+function handleStatusSelectionClick(index, id) {
+  for (let i = 0; i < statusSelection.children.length; i++) {
+      statusSelection.children[i].className = '';
+  }
+  statusSelection.children[index].className = 'active';
+  activeStatusSelection = statusSelection.children[index].textContent;
+
+  executeWithAllTasks(renderTasks);
+}
+
+function renderStatusSelection() {
+  statusSelection.innerHTML = '';
+  for (let i = 0; i < statusSelectionOptions.length; i++) {
+      const p = document.createElement('p');
+      p.textContent = statusSelectionOptions[i].text;
+      p.id = statusSelectionOptions[i].id;
+
+      if (i != 1) {
+          // If the middle element is being generated, it should remain highlighted
+          p.className = 'light-text';
+      }
+
+      statusSelection.appendChild(p);
+  }
+
+  addStatusSelectionEventListeners();
+}
+
+function deleteTask(id) {
+    // Remove the task with provided index. Once it's done, all indexes are moved respectively
+    console.log('Deleting: ' + id);
+    $.ajax({
+      url: '/task/' + id,
+      type: 'DELETE'
+      // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
+    });
+
+    executeWithAllTasks(renderTasks);
+}
+
+
+
 function handleStatusClick(index) {
     // General handler for any clicks done on the status circle.
+    let taskStatus;
+
+    $.ajax({
+      url: '/tasks',
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) { handleData(data); }
+      // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
+    });
 
     // The action depends on the status of relevant task at the exact moment of status circle clicking
     if (tasks[index].status === 'open') {
@@ -43,16 +82,6 @@ function handleStatusClick(index) {
     } else if (tasks[index].status === 'ongoing') {
         tasks[index].markDone();
     }
-    executeWithAllTasks(renderTasks);
-}
-
-function handleStatusSelectionClick(index, id) {
-    for (let i = 0; i < statusSelection.children.length; i++) {
-        statusSelection.children[i].className = '';
-    }
-    statusSelection.children[index].className = 'active';
-    activeStatusSelection = statusSelection.children[index].textContent;
-
     executeWithAllTasks(renderTasks);
 }
 
@@ -113,24 +142,6 @@ function renderTasks(tasks) {
     }
 
     addListEventListeners();
-}
-
-function renderStatusSelection() {
-    statusSelection.innerHTML = '';
-    for (let i = 0; i < statusSelectionOptions.length; i++) {
-        const p = document.createElement('p');
-        p.textContent = statusSelectionOptions[i].text;
-        p.id = statusSelectionOptions[i].id;
-
-        if (i != 1) {
-            // If the middle element is being generated, it should remain highlighted
-            p.className = 'light-text';
-        }
-
-        statusSelection.appendChild(p);
-    }
-
-    addStatusSelectionEventListeners();
 }
 
 function addListEventListeners() {
