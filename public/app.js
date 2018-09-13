@@ -50,18 +50,10 @@ function renderStatusSelection() {
 }
 
 function deleteTask(id) {
-    // Remove the task with provided index. Once it's done, all indexes are moved respectively
-    console.log('Deleting: ' + id);
-    $.ajax({
-      url: '/task/' + id,
-      type: 'DELETE'
-      // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
-    });
-
-    executeWithAllTasks(renderTasks);
+  // deletes task with provided id (that corresponds to _id field in MongoDB) from the database
+  return fetch(`/task/${id}`, { method: 'delete' })
+    .then(executeWithAllTasks(renderTasks));
 }
-
-
 
 function handleStatusClick(index) {
     // General handler for any clicks done on the status circle.
@@ -184,13 +176,15 @@ function ajaxAddNewTask(newTaskString) {
 }
 
 function executeWithAllTasks(handleData) {
-  $.ajax({
-    url: '/tasks',
-    type: 'GET',
-    dataType: 'json',
-    success: function(data) { handleData(data); }
-    // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
-  });
+  // $.ajax({
+  //   url: '/tasks',
+  //   type: 'GET',
+  //   dataType: 'json',
+  //   success: function(data) { handleData(data); }
+  //   // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
+  // });
+
+
 }
 
 function addAllEventListeners() {
