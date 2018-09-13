@@ -176,15 +176,15 @@ function ajaxAddNewTask(newTaskString) {
 }
 
 function executeWithAllTasks(handleData) {
-  // $.ajax({
-  //   url: '/tasks',
-  //   type: 'GET',
-  //   dataType: 'json',
-  //   success: function(data) { handleData(data); }
-  //   // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
-  // });
+  $.ajax({
+    url: '/tasks',
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) { handleData(response); }
+    // contentType: 'application/json' // it breaks stuff, todo: read more and fix properly
+  });
 
-
+  // return fetch('/tasks', { method: 'get' }).then((response) => { return handleData(response) });
 }
 
 function addAllEventListeners() {
